@@ -119,10 +119,10 @@ func (p *HoconObject) Merge(other *HoconObject) {
 }
 
 func (p *HoconObject) MergeImmutable(other *HoconObject) *HoconObject {
-	thisValues := map[string]*HoconValue{}
+	thisValues := p.items
 	otherKeys := other.keys
 
-	var thisKeys []string
+	thisKeys := p.keys
 
 	otherItems := other.items
 
