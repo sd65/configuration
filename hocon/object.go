@@ -108,6 +108,8 @@ func (p *HoconObject) Merge(other *HoconObject) {
 		if thisValue, exist := thisValues[otherkey]; exist {
 			if thisValue.IsObject() && otherValue.IsObject() {
 				thisValue.GetObject().Merge(otherValue.GetObject())
+			} else {
+				p.items[otherkey] = otherValue
 			}
 		} else {
 			p.items[otherkey] = otherValue
