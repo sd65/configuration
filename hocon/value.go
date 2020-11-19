@@ -431,12 +431,17 @@ func (p *HoconValue) GetTimeDuration(allowInfinite bool) time.Duration {
 }
 
 func (p *HoconValue) quoteIfNeeded(text string) string {
+
 	if len(text) == 0 {
 		return "\"\""
 	}
 
-	if strings.IndexByte(text, ' ') >= 0 ||
-		strings.IndexByte(text, '\t') >= 0 {
+        replacer := strings.NewReplacer(`\`, `\\`, `"`,`\"`)
+        text = replacer.Replace(text)
+	if strings.Contains(text, "\n") {
+		return "\"\"\"" + text + "\"\"\""
+	}
+	if strings.ContainsAny(text, " \t$\"{}[]:=+#`^?!@*&\\/") {
 		return "\"" + text + "\""
 	}
 
